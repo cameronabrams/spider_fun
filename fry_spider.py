@@ -1,9 +1,13 @@
+# Author: Cameron F. Abrams, <cfa22@drexel.edu>
+#
+# FrySpider: scrapes all content of John Fry's official emails to the Drexel Community
+# and dumps to a JSON file
+#
 import scrapy
 
 class QuotesSpider(scrapy.Spider):
     name = "quotes"
     start_urls = [
-        # "https://drexel.edu/president/messages/message/2023/April/summer-fridays-and-july-3-closure/",
         "https://drexel.edu/president/messages/message/",
     ]
 
@@ -13,7 +17,8 @@ class QuotesSpider(scrapy.Spider):
             yield {
                 'title':article.xpath("//h1/text()").get(),
                 'date':article.css("span.date::text").get(),
-                'body':article.xpath("//p/text()").extract()
+                'body':article.xpath("//p/text()").extract(),
+                'links':article.xpath("//p/a/text()").extract(),
             }
         years=response.css("ul.year-guide")
         for yearstruct in years.css("li"):
