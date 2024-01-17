@@ -90,7 +90,7 @@ if __name__=='__main__':
     #help(WordCloud)
     wordcloud = WordCloud(width=900,height=600, 
                     background_color='white',normalize_plurals=False, collocations=False,
-                    min_font_size=10,colormap=cm.gist_stern).generate(comment_words) 
+                    min_font_size=10,colormap=cm.plasma).generate(comment_words) 
     
     # plot the WordCloud image                        
     plt.figure(figsize=(9,6),facecolor=None) 
