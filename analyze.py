@@ -66,18 +66,24 @@ if __name__=='__main__':
         dataset=json.loads(data)
     all_w=[]
     print(f'{args.f} has data for {len(dataset)} items')
+    words_per_item=0
     for item in dataset:
         xfr=False
+        wpi=0
         for p in item['body']:
             if 'Sincerely' in p:
                 xfr=False
             if xfr:
-                all_w.extend(process_line_into_wordlist(p))
+                wordlist=process_line_into_wordlist(p)
+                all_w.extend(wordlist)
+                wpi+=len(wordlist)
             if 'Dear' in p:
                 xfr=True
+        words_per_item+=wpi
     word_count={}
     for w in set(all_w):
         word_count[w]=all_w.count(w)
+    print(f'{words_per_item/len(dataset):.2f} words per email, on average')
     print(f'{len(all_w)} words, {len(word_count)} distinct')
     # for w in sorted(word_count,key=word_count.get,reverse=True):
     # #    print(w,word_count[w])

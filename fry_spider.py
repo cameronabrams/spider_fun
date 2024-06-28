@@ -12,8 +12,8 @@ class QuotesSpider(scrapy.Spider):
     ]
 
     def parse(self, response):
-        article=response.css("article.content-news")
-        if article is not None and article.xpath("//h1/text()").get() is not None:
+        article=response.css("rich-text")
+        if article is not None: # and article.xpath("//h1/text()").get() is not None:
             yield {
                 'title':article.xpath("//h1/text()").get(),
                 'date':article.css("span.date::text").get(),
